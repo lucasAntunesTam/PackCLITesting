@@ -1,0 +1,33 @@
+on:
+  workflow_call:
+    inputs:
+      test:
+        required: true
+        type: string
+
+jobs:
+  testing_job:
+    runs-on: windows-latest
+    steps:
+    - name: Test Input 
+      shell:  pwsh
+      run: |
+        echo ${{ inputs.test }}
+        ls ${{ github.workspace }}
+        
+    - name: Check out repository code 
+      uses: actions/checkout@v4
+      with:
+        path: main
+        
+    - name: Check out repository code 2
+      uses: actions/checkout@v4
+      with:
+        repository: lucasAntunesTam/CICD_Pipeline
+        path: main2
+      
+    - name: Build nuget package 
+      shell:  pwsh
+      run: |
+        ls ${{ github.workspace }}\main
+        ls ${{ github.workspace }}\main2
